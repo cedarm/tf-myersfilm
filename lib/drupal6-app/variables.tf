@@ -1,3 +1,4 @@
+variable "region" {}
 variable "vpc_id" {}
 variable "service_name" {}
 variable "code_pipeline_service_role" {}

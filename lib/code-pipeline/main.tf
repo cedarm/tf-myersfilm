@@ -1,4 +1,5 @@
 resource "aws_codepipeline" "pipeline" {
+  provider = "aws.specific-region"
   name = "${var.pipeline_name}"
   role_arn = "arn:aws:iam::536179965220:role/AWS-CodePipeline-Service"
 

@@ -1,4 +1,5 @@
 resource "aws_db_instance" "db" {
+  provider = "aws.specific-region"
   identifier              = "${var.service_name}-${random_id.uniq_id.dec}"
   engine                  = "${var.engine}"
   engine_version          = "${var.engine_version}"

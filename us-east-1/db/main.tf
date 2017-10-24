@@ -24,6 +24,7 @@ module "drupal_shared" {
 }
 
 resource "aws_security_group" "sg" {
+  provider = "aws.specific-region"
   name = "postgres"
 
   // TODO restrict to local subnets

@@ -1,4 +1,5 @@
 resource "aws_launch_configuration" "launch_config" {
+  provider = "aws.specific-region"
   //name_prefix = "${var.service_name}-${var.env}-${random_id.uniq_id.dec}-"
   name_prefix = "${var.service_name}-${var.env}-${var.uniq_id}-"
 
@@ -23,6 +24,7 @@ resource "aws_launch_configuration" "launch_config" {
 }
 
 resource "aws_security_group" "instances" {
+  provider = "aws.specific-region"
   //name = "${var.service_name}-${var.env}-instances-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.env}-instances-${var.uniq_id}"
   ingress {
@@ -50,11 +52,8 @@ resource "aws_security_group" "instances" {
 
 data "aws_availability_zones" "all" {}
 
-data "aws_region" "current" {
-  current = true
-}
-
 resource "aws_autoscaling_group" "asg" {
+  provider = "aws.specific-region"
   //name = "${var.service_name}-${var.env}-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.env}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
@@ -79,6 +78,7 @@ resource "aws_autoscaling_group" "asg" {
 }
 
 resource "aws_elb" "elb" {
+  provider = "aws.specific-region"
   //name = "${var.service_name}-${var.env}"
   //name = "${var.service_name}-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.uniq_id}"
@@ -106,6 +106,7 @@ resource "aws_elb" "elb" {
 }
 
 resource "aws_security_group" "elb" {
+  provider = "aws.specific-region"
   //name = "${var.service_name}-elb-${var.env}-${random_id.uniq_id.dec}"
   //name = "${var.service_name}-elb-${var.env}-${var.uniq_id}"
   name = "elb-${var.service_name}-${var.env}-${var.uniq_id}"

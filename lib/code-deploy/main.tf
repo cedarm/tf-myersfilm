@@ -1,8 +1,10 @@
 resource "aws_codedeploy_app" "app" {
+  provider = "aws.specific-region"
   name = "${var.app_name}"
 }
 
 resource "aws_codedeploy_deployment_group" "stage_group" {
+  provider = "aws.specific-region"
   app_name              = "${aws_codedeploy_app.app.name}"
   deployment_group_name = "${var.stage_deployment_group_name}"
   service_role_arn      = "${var.service_role}"
@@ -23,6 +25,7 @@ resource "aws_codedeploy_deployment_group" "stage_group" {
 }
 
 resource "aws_codedeploy_deployment_group" "production_group" {
+  provider = "aws.specific-region"
   app_name              = "${aws_codedeploy_app.app.name}"
   deployment_group_name = "${var.production_deployment_group_name}"
   service_role_arn      = "${var.service_role}"

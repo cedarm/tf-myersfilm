@@ -1,4 +1,5 @@
 resource "aws_s3_bucket" "bucket" {
+  provider = "aws.specific-region"
   bucket = "codepipeline-${var.region}-${random_id.uniq_id.dec}"
   acl    = "private"
 
@@ -8,6 +9,7 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_bucket_policy" "bucket" {
+  provider = "aws.specific-region"
   bucket = "${aws_s3_bucket.bucket.id}"
   policy =<<EOF
 {

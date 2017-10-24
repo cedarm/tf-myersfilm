@@ -31,6 +31,7 @@ module "production" {
   service_name = "${var.service_name}"
 
   env = "production"
+  region = "${var.region}"
   vpc_id = "${var.vpc_id}"
 
   instance_type = "${var.production_instance_type}"
@@ -43,31 +44,10 @@ module "stage" {
   service_name = "${var.service_name}"
 
   env = "stage"
+  region = "${var.region}"
   vpc_id = "${var.vpc_id}"
 
   instance_type = "${var.stage_instance_type}"
   min_instances = "${var.stage_min_instances}"
   max_instances = "${var.stage_max_instances}"
 }
-
-/*
-data "aws_region" "current" {
-  current = true
-}
-
-data "template_file" "amazon_linux_instance_setup" {
-  template = "${file("${path.module}/amazon-linux-instance-setup.sh.tpl")}"
-  vars = {
-    region = "${data.aws_region.current.name}"
-    efs_dns_name = "${var.efs_dns_name}"
-  }
-}
-
-data "template_file" "ubuntu_instance_setup" {
-  template = "${file("${path.module}/ubuntu-instance-setup.sh.tpl")}"
-  vars = {
-    region = "${data.aws_region.current.name}"
-    efs_dns_name = "${var.efs_dns_name}"
-  }
-}
-*/

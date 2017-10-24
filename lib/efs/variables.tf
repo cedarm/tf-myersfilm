@@ -1,4 +1,5 @@
 variable "env" {}
+variable "region" {}
 variable "service_name" {}
 variable "uniq_id" {}
 

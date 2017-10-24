@@ -3,6 +3,7 @@ module "asg" {
   service_name = "${var.service_name}"
   uniq_id = "${random_id.uniq_id.dec}"
   env = "${var.env}"
+  region = "${var.region}"
 
   instance_type = "${var.instance_type}"
   min_instances = "${var.min_instances}"
@@ -14,15 +15,10 @@ module "asg" {
 module "efs" {
   source = "../../efs"
   env = "${var.env}"
-  //service_name = "drupal-shared-${data.aws_region.current.name}"
-  //service_name = "${var.service_name}-${data.aws_region.current.name}"
+  region = "${var.region}"
   service_name = "${var.service_name}"
   uniq_id = "${random_id.uniq_id.dec}"
   mount_target_subnets = ["${data.aws_subnet_ids.vpc.ids}"]
-}
-
-data "aws_region" "current" {
-  current = true
 }
 
 data "aws_subnet_ids" "vpc" {
@@ -32,7 +28,7 @@ data "aws_subnet_ids" "vpc" {
 data "template_file" "amazon_linux_instance_setup" {
   template = "${file("${path.module}/amazon-linux-instance-setup.sh.tpl")}"
   vars = {
-    region = "${data.aws_region.current.name}"
+    region = "${var.region}"
     efs_dns_name = "${module.efs.dns_name}"
   }
 }
@@ -40,7 +36,7 @@ data "template_file" "amazon_linux_instance_setup" {
 data "template_file" "ubuntu_instance_setup" {
   template = "${file("${path.module}/ubuntu-instance-setup.sh.tpl")}"
   vars = {
-    region = "${data.aws_region.current.name}"
+    region = "${var.region}"
     efs_dns_name = "${module.efs.dns_name}"
   }
 }
