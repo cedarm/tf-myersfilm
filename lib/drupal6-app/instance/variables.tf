@@ -6,6 +6,10 @@ variable "vpc_subnet_ids" {
   type = "list"
 }
 
+variable "availability_zones" {
+  type = "list"
+}
+
 variable "instance_type" {
   default = "t2.micro"
 }

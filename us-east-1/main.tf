@@ -1,3 +1,7 @@
+data "aws_availability_zones" "all" {
+  provider = "aws.specific-region"
+}
+
 data "aws_subnet_ids" "vpc" {
   provider = "aws.specific-region"
   vpc_id = "vpc-4dca0b29"
@@ -24,6 +28,7 @@ module "drupal6_app" {
   source = "../lib/drupal6-app"
   service_name = "d6-test"
   region = "${var.aws_region}"
+  availability_zones = ["${data.aws_availability_zones.all.names}"]
   vpc_subnet_ids = ["${data.aws_subnet_ids.vpc.ids}"]
 
   production_instance_type = "t2.nano"

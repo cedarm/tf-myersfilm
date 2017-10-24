@@ -50,14 +50,12 @@ resource "aws_security_group" "instances" {
   }
 }
 
-data "aws_availability_zones" "all" {}
-
 resource "aws_autoscaling_group" "asg" {
   provider = "aws.specific-region"
   //name = "${var.service_name}-${var.env}-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.env}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
+  availability_zones = ["${var.availability_zones}"]
 
   min_size = "${var.min_instances}"
   max_size = "${var.max_instances}"
@@ -83,7 +81,7 @@ resource "aws_elb" "elb" {
   //name = "${var.service_name}-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.uniq_id}"
   security_groups = ["${aws_security_group.elb.id}"]
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
+  availability_zones = ["${var.availability_zones}"]
 
   health_check {
     healthy_threshold = 2

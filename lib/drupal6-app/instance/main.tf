@@ -4,6 +4,7 @@ module "asg" {
   uniq_id = "${random_id.uniq_id.dec}"
   env = "${var.env}"
   region = "${var.region}"
+  availability_zones = "${var.availability_zones}"
 
   instance_type = "${var.instance_type}"
   min_instances = "${var.min_instances}"
