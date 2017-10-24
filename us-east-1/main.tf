@@ -20,8 +20,14 @@ resource "aws_iam_role_policy_attachment" "s3read_codepipeline" {
   policy_arn = "${module.code_pipeline_bucket.s3read_policy_arn}"
 }
 
+resource "random_shuffle" "db_az" {
+  input = ["${data.aws_availability_zones.all.names}"]
+  result_count = 1
+}
+
 module "db" {
   source = "./db"
+  availability_zone = "${random_shuffle.db_az.result[0]}"
 }
 
 module "drupal6_app" {

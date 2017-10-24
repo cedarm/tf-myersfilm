@@ -5,9 +5,8 @@ module "drupal_shared" {
   engine = "postgres"
   engine_version = "9.6.3"
 
-  //instance_class = "db.t2.micro"
   instance_class = "db.t2.small"
-  availability_zone = "us-east-1e"
+  availability_zone = "${var.availability_zone}"
   multi_az = "false"
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
   //vpc_security_group_ids = ["sg-0a661278"] // blackhole

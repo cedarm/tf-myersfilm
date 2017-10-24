@@ -1,3 +1,5 @@
+variable "availability_zone" {}
+
 /*
 resource "random_id" "uniq_id" {
   keepers = {
