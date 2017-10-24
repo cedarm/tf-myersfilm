@@ -32,7 +32,7 @@ module "production" {
 
   env = "production"
   region = "${var.region}"
-  vpc_id = "${var.vpc_id}"
+  vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
 
   instance_type = "${var.production_instance_type}"
   min_instances = "${var.production_min_instances}"
@@ -45,7 +45,7 @@ module "stage" {
 
   env = "stage"
   region = "${var.region}"
-  vpc_id = "${var.vpc_id}"
+  vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
 
   instance_type = "${var.stage_instance_type}"
   min_instances = "${var.stage_min_instances}"

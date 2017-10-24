@@ -1,9 +1,12 @@
 variable "region" {}
-variable "vpc_id" {}
 variable "service_name" {}
 variable "code_pipeline_service_role" {}
 variable "code_pipeline_artifact_bucket_name" {}
 variable "code_deploy_service_role" {}
+
+variable "vpc_subnet_ids" {
+  type = "list"
+}
 
 variable "production_instance_type" {
   default = "t2.micro"

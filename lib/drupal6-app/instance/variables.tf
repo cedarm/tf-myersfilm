@@ -1,7 +1,10 @@
 variable "env" {}
 variable "region" {}
-variable "vpc_id" {}
 variable "service_name" {}
+
+variable "vpc_subnet_ids" {
+  type = "list"
+}
 
 variable "instance_type" {
   default = "t2.micro"

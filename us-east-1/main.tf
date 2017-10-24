@@ -1,4 +1,4 @@
-data "aws_subnet_ids" "default_vpc" {
+data "aws_subnet_ids" "vpc" {
   provider = "aws.specific-region"
   vpc_id = "vpc-4dca0b29"
   //tags {
@@ -24,7 +24,7 @@ module "drupal6_app" {
   source = "../lib/drupal6-app"
   service_name = "d6-test"
   region = "${var.aws_region}"
-  vpc_id = "vpc-4dca0b29"
+  vpc_subnet_ids = ["${data.aws_subnet_ids.vpc.ids}"]
 
   production_instance_type = "t2.nano"
   production_min_instances = 2

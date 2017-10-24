@@ -18,11 +18,7 @@ module "efs" {
   region = "${var.region}"
   service_name = "${var.service_name}"
   uniq_id = "${random_id.uniq_id.dec}"
-  mount_target_subnets = ["${data.aws_subnet_ids.vpc.ids}"]
-}
-
-data "aws_subnet_ids" "vpc" {
-  vpc_id = "${var.vpc_id}"
+  mount_target_subnets = ["${var.vpc_subnet_ids}"]
 }
 
 data "template_file" "amazon_linux_instance_setup" {
