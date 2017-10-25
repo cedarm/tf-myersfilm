@@ -5,6 +5,7 @@ module "asg" {
   env = "${var.env}"
   region = "${var.region}"
   availability_zones = "${var.availability_zones}"
+  ssh_key_name = "${var.ssh_key_name}"
 
   instance_type = "${var.instance_type}"
   min_instances = "${var.min_instances}"

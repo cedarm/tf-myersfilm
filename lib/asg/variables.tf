@@ -7,6 +7,10 @@ variable "availability_zones" {
   type = "list"
 }
 
+variable "ssh_key_name" {
+  default = ""
+}
+
 variable "server_port" {
   default = 80
 }

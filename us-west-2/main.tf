@@ -39,6 +39,7 @@ module "drupal6_app" {
   region = "${var.aws_region}"
   availability_zones = ["${data.aws_availability_zones.all.names}"]
   vpc_subnet_ids = ["${data.aws_subnet_ids.vpc.ids}"]
+  ssh_key_name = "${aws_key_pair.ec2_admin.key_name}"
 
   production_instance_type = "t2.nano"
   production_min_instances = 2

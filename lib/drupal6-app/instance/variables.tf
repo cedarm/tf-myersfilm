@@ -10,6 +10,10 @@ variable "availability_zones" {
   type = "list"
 }
 
+variable "ssh_key_name" {
+  default = ""
+}
+
 variable "instance_type" {
   default = "t2.micro"
 }

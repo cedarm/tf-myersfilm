@@ -37,7 +37,7 @@ resource "aws_launch_configuration" "launch_config" {
   instance_type = "${var.instance_type}"
   // spot_price = "0.001"
   security_groups = ["${aws_security_group.instances.id}"]
-  key_name      = "cedarm-myersfilm-aws"
+  key_name      = "${var.ssh_key_name}"
   iam_instance_profile = "CodeDeployDemo-EC2-Instance-Profile"
 
   user_data = "${var.user_data}"

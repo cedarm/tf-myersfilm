@@ -12,6 +12,10 @@ variable "availability_zones" {
   type = "list"
 }
 
+variable "ssh_key_name" {
+  default = ""
+}
+
 variable "production_instance_type" {
   default = "t2.micro"
 }
