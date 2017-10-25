@@ -10,6 +10,12 @@ data "aws_subnet_ids" "vpc" {
   //}
 }
 
+resource "aws_key_pair" "ec2_admin" {
+  provider = "aws.specific-region"
+  key_name   = "ec2-admin"
+  public_key = "${var.ssh_public_key}"
+}
+
 module "code_pipeline_bucket" {
   source = "../lib/code-pipeline-artifact-bucket"
   region = "${var.aws_region}"
