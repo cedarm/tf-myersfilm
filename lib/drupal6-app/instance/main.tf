@@ -1,10 +1,18 @@
+module "elb" {
+  source = "../../elb"
+  service_name = "${var.service_name}"
+  uniq_id = "${random_id.uniq_id.dec}"
+  env = "${var.env}"
+  availability_zones = "${var.availability_zones}"
+}
+
 module "asg" {
   source = "../../asg"
   service_name = "${var.service_name}"
   uniq_id = "${random_id.uniq_id.dec}"
   env = "${var.env}"
-  region = "${var.region}"
   availability_zones = "${var.availability_zones}"
+  elb_name = "${module.elb.elb_name}"
   ssh_key_name = "${var.ssh_key_name}"
 
   instance_type = "${var.instance_type}"

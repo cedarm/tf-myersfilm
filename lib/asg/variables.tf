@@ -1,7 +1,7 @@
 variable "env" {}
-variable "region" {}
 variable "service_name" {}
 variable "uniq_id" {}
+variable "elb_name" {}
 
 variable "availability_zones" {
   type = "list"
@@ -29,12 +29,4 @@ variable "max_instances" {
 
 variable "user_data" {
   default = ""
-}
-
-resource "random_id" "uniq_id" {
-  keepers = {
-    service_name = "${var.service_name}"
-    env      = "${var.env}"
-  }
-  byte_length = 4
 }
