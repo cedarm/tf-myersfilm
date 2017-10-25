@@ -1,12 +1,38 @@
+data "aws_ami" "amazon_linux" {
+  most_recent      = true
+  owners           = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-2017.09.*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "block-device-mapping.volume-type"
+    values = ["gp2"]
+  }
+}
+
 resource "aws_launch_configuration" "launch_config" {
   provider = "aws.specific-region"
-  //name_prefix = "${var.service_name}-${var.env}-${random_id.uniq_id.dec}-"
   name_prefix = "${var.service_name}-${var.env}-${var.uniq_id}-"
 
-  // image_id = "${lookup(var.RegionOS2AMI, var.Region)}"
-  //   or see aws_ami data source
-  image_id = "ami-8c1be5f6" // amazon linux
-  //image_id = "ami-cd0f5cb6" // ubuntu
+  image_id = "${data.aws_ami.amazon_linux.image_id}"
 
   instance_type = "${var.instance_type}"
   // spot_price = "0.001"
@@ -14,8 +40,6 @@ resource "aws_launch_configuration" "launch_config" {
   key_name      = "cedarm-myersfilm-aws"
   iam_instance_profile = "CodeDeployDemo-EC2-Instance-Profile"
 
-  //user_data = "${data.template_file.amazon_linux_instance_setup.rendered}"
-  //user_data = "${data.template_file.ubuntu_instance_setup.rendered}"
   user_data = "${var.user_data}"
 
   lifecycle {
@@ -25,7 +49,6 @@ resource "aws_launch_configuration" "launch_config" {
 
 resource "aws_security_group" "instances" {
   provider = "aws.specific-region"
-  //name = "${var.service_name}-${var.env}-instances-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.env}-instances-${var.uniq_id}"
   ingress {
     from_port = "${var.server_port}"
@@ -52,7 +75,6 @@ resource "aws_security_group" "instances" {
 
 resource "aws_autoscaling_group" "asg" {
   provider = "aws.specific-region"
-  //name = "${var.service_name}-${var.env}-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.env}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
   availability_zones = ["${var.availability_zones}"]
@@ -77,8 +99,6 @@ resource "aws_autoscaling_group" "asg" {
 
 resource "aws_elb" "elb" {
   provider = "aws.specific-region"
-  //name = "${var.service_name}-${var.env}"
-  //name = "${var.service_name}-${random_id.uniq_id.dec}"
   name = "${var.service_name}-${var.uniq_id}"
   security_groups = ["${aws_security_group.elb.id}"]
   availability_zones = ["${var.availability_zones}"]
@@ -105,8 +125,6 @@ resource "aws_elb" "elb" {
 
 resource "aws_security_group" "elb" {
   provider = "aws.specific-region"
-  //name = "${var.service_name}-elb-${var.env}-${random_id.uniq_id.dec}"
-  //name = "${var.service_name}-elb-${var.env}-${var.uniq_id}"
   name = "elb-${var.service_name}-${var.env}-${var.uniq_id}"
   egress {
     from_port = 0
