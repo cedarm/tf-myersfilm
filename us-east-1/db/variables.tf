@@ -1,13 +1,8 @@
 variable "availability_zone" {}
 
-/*
-resource "random_id" "uniq_id" {
-  keepers = {
-    service_name = "${var.service_name}"
-  }
-  byte_length = 4
+variable "allow_from_security_groups" {
+  default = []
 }
-*/
 
 resource "random_id" "drupal_shared_password" {
   keepers = {

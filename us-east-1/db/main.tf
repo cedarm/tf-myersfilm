@@ -26,12 +26,11 @@ resource "aws_security_group" "sg" {
   provider = "aws.specific-region"
   name = "postgres"
 
-  // TODO restrict to local subnets
   ingress {
     from_port = "5432"
     to_port = "5432"
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0", "67.190.110.168/32"]
-    description = "allow from anywhere"
+    security_groups = ["${var.allow_from_security_groups}"]
+    description = "allow from specific security groups"
   }
 }

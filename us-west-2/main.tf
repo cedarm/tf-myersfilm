@@ -26,6 +26,10 @@ resource "random_shuffle" "db_az" {
 module "db" {
   source = "./db"
   availability_zone = "${random_shuffle.db_az.result[0]}"
+  allow_from_security_groups = [
+    "${module.drupal6_app.production_instance_security_group_id}",
+    "${module.drupal6_app.stage_instance_security_group_id}",
+  ]
 }
 
 module "drupal6_app" {

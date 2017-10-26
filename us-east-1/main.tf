@@ -29,8 +29,13 @@ resource "random_shuffle" "db_az" {
 module "db" {
   source = "./db"
   availability_zone = "${random_shuffle.db_az.result[0]}"
+  allow_from_security_groups = [
+//    "${module.drupal6_app.production_instance_security_group_id}",
+//    "${module.drupal6_app.stage_instance_security_group_id}",
+  ]
 }
 
+/*
 module "drupal6_app" {
   source = "../lib/drupal6-app"
   service_name = "d6-test"
@@ -51,3 +56,4 @@ module "drupal6_app" {
   s3read_code_pipeline_policy_arn = "${module.code_pipeline_bucket.s3read_policy_arn}"
   code_deploy_service_role = "${var.code_deploy_service_role_arn}"
 }
+*/
