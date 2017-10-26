@@ -40,6 +40,7 @@ module "efs" {
   service_name = "${var.service_name}"
   uniq_id = "${random_id.uniq_id.dec}"
   mount_target_subnets = ["${var.vpc_subnet_ids}"]
+  allow_from_security_groups = ["${module.asg.instance_security_group_id}"]
 }
 
 data "template_file" "amazon_linux_instance_setup" {

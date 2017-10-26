@@ -15,7 +15,7 @@ variable "mount_target_subnets" {
   type = "list"
 }
 
-variable "extra_security_groups" {
+variable "allow_from_security_groups" {
   default = []
 }
 
