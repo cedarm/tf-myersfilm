@@ -1,9 +1,6 @@
-data "aws_availability_zones" "all" {
-  provider = "aws.specific-region"
-}
+data "aws_availability_zones" "all" {}
 
 data "aws_subnet_ids" "vpc" {
-  provider = "aws.specific-region"
   vpc_id = "vpc-4dca0b29"
   //tags {
   //  Tier = "Private"
@@ -11,7 +8,6 @@ data "aws_subnet_ids" "vpc" {
 }
 
 resource "aws_key_pair" "ec2_admin" {
-  provider = "aws.specific-region"
   key_name   = "ec2-admin"
   public_key = "${var.ssh_public_key}"
 }

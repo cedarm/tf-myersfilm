@@ -3,7 +3,6 @@ locals {
 }
 
 resource "aws_efs_file_system" "fs" {
-  provider = "aws.specific-region"
   creation_token = "${random_id.creation_token.hex}"
   performance_mode = "${var.performance_mode}"
   encrypted = "${var.encrypted}"
@@ -11,7 +10,6 @@ resource "aws_efs_file_system" "fs" {
 }
 
 resource "aws_efs_mount_target" "targets" {
-  provider = "aws.specific-region"
   count = "${length(var.mount_target_subnets)}"
   file_system_id  = "${aws_efs_file_system.fs.id}"
   subnet_id       = "${var.mount_target_subnets[count.index]}"
@@ -19,7 +17,6 @@ resource "aws_efs_mount_target" "targets" {
 }
 
 resource "aws_security_group" "sg" {
-  provider = "aws.specific-region"
   name = "efs-${var.service_name}-${var.env}-${var.uniq_id}"
   ingress {
     from_port = "2049"

@@ -1,5 +1,4 @@
 resource "aws_iam_policy" "codepipeline_service" {
-  provider = "aws.default-region"
   name        = "oneClick_AWS-CodePipeline-Service_1508613050350"
   path        = "/"
   description = "Allow reading S3 Code Pipeline artifacts"

@@ -23,7 +23,6 @@ module "asg" {
 }
 
 resource "aws_iam_role_policy_attachment" "code_deploy_ro" {
-  provider = "aws.specific-region"
   role = "${module.asg.instance_role_name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployReadOnlyAccess"
 }

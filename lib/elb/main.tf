@@ -1,5 +1,4 @@
 resource "aws_elb" "elb" {
-  provider = "aws.specific-region"
   name = "${var.service_name}-${var.uniq_id}"
   security_groups = ["${aws_security_group.elb.id}"]
   availability_zones = ["${var.availability_zones}"]
@@ -25,7 +24,6 @@ resource "aws_elb" "elb" {
 }
 
 resource "aws_security_group" "elb" {
-  provider = "aws.specific-region"
   name = "elb-${var.service_name}-${var.env}-${var.uniq_id}"
   egress {
     from_port = 0

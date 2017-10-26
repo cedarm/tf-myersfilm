@@ -1,5 +1,4 @@
 variable "app_name" {}
-
 variable "service_role" {}
 
 variable "stage_deployment_group_name" {

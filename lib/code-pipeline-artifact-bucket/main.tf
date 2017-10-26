@@ -1,5 +1,4 @@
 resource "aws_s3_bucket" "bucket" {
-  provider = "aws.specific-region"
   bucket = "codepipeline-${var.region}-${random_id.uniq_id.dec}"
   acl    = "private"
 
@@ -9,7 +8,6 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_bucket_policy" "bucket" {
-  provider = "aws.specific-region"
   bucket = "${aws_s3_bucket.bucket.id}"
   policy =<<EOF
 {
@@ -46,7 +44,6 @@ EOF
 }
 
 resource "aws_iam_policy" "s3read_codepipeline" {
-  provider = "aws.specific-region"
   name        = "S3Read-codepipeline-${var.region}"
   path        = "/"
   description = "Allow reading S3 Code Pipeline artifacts"

@@ -29,7 +29,6 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_launch_configuration" "launch_config" {
-  provider = "aws.specific-region"
   name_prefix = "${var.service_name}-${var.env}-${var.uniq_id}-"
 
   image_id = "${data.aws_ami.amazon_linux.image_id}"
@@ -48,7 +47,6 @@ resource "aws_launch_configuration" "launch_config" {
 }
 
 resource "aws_security_group" "instances" {
-  provider = "aws.specific-region"
   name = "${var.service_name}-${var.env}-instances-${var.uniq_id}"
   ingress {
     from_port = "${var.server_port}"
@@ -74,7 +72,6 @@ resource "aws_security_group" "instances" {
 }
 
 resource "aws_iam_role" "instance_role" {
-  provider = "aws.specific-region"
   name = "${var.service_name}-${var.env}-${var.uniq_id}-instance-role"
   path = "/"
   assume_role_policy = <<EOF
@@ -94,13 +91,11 @@ resource "aws_iam_role" "instance_role" {
 }
 
 resource "aws_iam_instance_profile" "profile" {
-  provider = "aws.specific-region"
   name = "${var.service_name}-${var.env}-${var.uniq_id}-instance-profile"
   role = "${aws_iam_role.instance_role.name}"
 }
 
 resource "aws_autoscaling_group" "asg" {
-  provider = "aws.specific-region"
   name = "${var.service_name}-${var.env}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
   availability_zones = ["${var.availability_zones}"]
