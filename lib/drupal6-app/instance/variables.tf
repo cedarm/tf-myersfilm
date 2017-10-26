@@ -1,6 +1,7 @@
 variable "env" {}
 variable "region" {}
 variable "service_name" {}
+variable "s3read_code_pipeline_policy_arn" {}
 
 variable "vpc_subnet_ids" {
   type = "list"

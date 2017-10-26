@@ -18,11 +18,6 @@ module "code_pipeline_bucket" {
   region = "${var.aws_region}"
 }
 
-resource "aws_iam_role_policy_attachment" "s3read_codepipeline" {
-  role       = "${var.instance_role_name}"
-  policy_arn = "${module.code_pipeline_bucket.s3read_policy_arn}"
-}
-
 resource "random_shuffle" "db_az" {
   input = ["${data.aws_availability_zones.all.names}"]
   result_count = 1
@@ -50,5 +45,6 @@ module "drupal6_app" {
 
   code_pipeline_service_role = "arn:aws:iam::536179965220:role/AWS-CodePipeline-Service"
   code_pipeline_artifact_bucket_name = "${module.code_pipeline_bucket.bucket_name}"
+  s3read_code_pipeline_policy_arn = "${module.code_pipeline_bucket.s3read_policy_arn}"
   code_deploy_service_role = "${var.code_deploy_service_role_arn}"
 }

@@ -38,7 +38,7 @@ resource "aws_launch_configuration" "launch_config" {
   // spot_price = "0.001"
   security_groups = ["${aws_security_group.instances.id}"]
   key_name      = "${var.ssh_key_name}"
-  iam_instance_profile = "CodeDeployDemo-EC2-Instance-Profile"
+  iam_instance_profile = "${aws_iam_instance_profile.profile.name}"
 
   user_data = "${var.user_data}"
 
@@ -71,6 +71,32 @@ resource "aws_security_group" "instances" {
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_iam_role" "instance_role" {
+  provider = "aws.specific-region"
+  name = "${var.service_name}-${var.env}-${var.uniq_id}-instance-role"
+  path = "/"
+  assume_role_policy = <<EOF
+{
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ec2.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    }
+    EOF
+}
+
+resource "aws_iam_instance_profile" "profile" {
+  provider = "aws.specific-region"
+  name = "${var.service_name}-${var.env}-${var.uniq_id}-instance-profile"
+  role = "${aws_iam_role.instance_role.name}"
 }
 
 resource "aws_autoscaling_group" "asg" {

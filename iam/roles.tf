@@ -45,29 +45,3 @@ resource "aws_iam_role" "code_deploy_service_role" {
     }
     EOF
 }
-
-resource "aws_iam_role" "code_deploy_demo_ec2_instance_profile_role" {
-  provider = "aws.default-region"
-  name = "CodeDeployDemo-EC2-Instance-Profile"
-  path = "/"
-  assume_role_policy = <<EOF
-{
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Principal": {
-            "Service": "ec2.amazonaws.com"
-          },
-          "Action": "sts:AssumeRole"
-        }
-      ]
-    }
-    EOF
-}
-
-resource "aws_iam_role_policy_attachment" "test_attach" {
-  provider = "aws.default-region"
-  role = "${aws_iam_role.code_deploy_demo_ec2_instance_profile_role.name}"
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployReadOnlyAccess"
-}

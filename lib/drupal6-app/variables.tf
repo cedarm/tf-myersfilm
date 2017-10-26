@@ -2,6 +2,7 @@ variable "region" {}
 variable "service_name" {}
 variable "code_pipeline_service_role" {}
 variable "code_pipeline_artifact_bucket_name" {}
+variable "s3read_code_pipeline_policy_arn" {}
 variable "code_deploy_service_role" {}
 
 variable "vpc_subnet_ids" {

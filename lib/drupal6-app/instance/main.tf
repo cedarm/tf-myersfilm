@@ -22,6 +22,17 @@ module "asg" {
   user_data = "${data.template_file.amazon_linux_instance_setup.rendered}"
 }
 
+resource "aws_iam_role_policy_attachment" "code_deploy_ro" {
+  provider = "aws.specific-region"
+  role = "${module.asg.instance_role_name}"
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployReadOnlyAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "s3read_codepipeline" {
+  role       = "${module.asg.instance_role_name}"
+  policy_arn = "${var.s3read_code_pipeline_policy_arn}"
+}
+
 module "efs" {
   source = "../../efs"
   env = "${var.env}"
