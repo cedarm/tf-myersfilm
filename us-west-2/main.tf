@@ -19,8 +19,13 @@ resource "random_shuffle" "db_az" {
   result_count = 1
 }
 
+resource "random_id" "drupal6_shared_db" {
+  byte_length = 4
+}
+
 module "db" {
   source = "./db"
+  uniq_id = "${random_id.drupal6_shared_db.dec}"
   availability_zone = "${random_shuffle.db_az.result[0]}"
   allow_from_security_groups = [
     "${module.drupal6_app.production_instance_security_group_id}",
@@ -28,9 +33,14 @@ module "db" {
   ]
 }
 
+resource "random_id" "drupal6_app" {
+  byte_length = 4
+}
+
 module "drupal6_app" {
   source = "../lib/drupal6-app"
   service_name = "d6-test"
+  uniq_id = "${random_id.drupal6_app.dec}"
   region = "${var.aws_region}"
   vpc_id = "${var.default_vpc_id}"
   elb_subnet_ids = ["${data.aws_subnet_ids.default_vpc.ids}"]
