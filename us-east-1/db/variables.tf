@@ -1,3 +1,5 @@
+variable "uniq_id" {}
+
 variable "availability_zone" {}
 
 variable "allow_from_security_groups" {

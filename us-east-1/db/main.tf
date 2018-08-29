@@ -1,6 +1,7 @@
 module "drupal_shared" {
   source = "../../lib/rds"
   service_name = "drupal-shared"
+  uniq_id = "${var.uniq_id}"
 
   engine = "postgres"
   engine_version = "9.6.3"
