@@ -15,12 +15,45 @@ resource "aws_codepipeline" "pipeline" {
       owner = "ThirdParty"
       provider = "GitHub"
       version = "1"
-      output_artifacts = ["DeployPackage"]
+      output_artifacts = ["Source"]
       configuration {
         Owner = "${var.repo_owner}"
         Repo = "${var.repo_name}"
         Branch = "${var.repo_branch}"
         PollForSourceChanges = "true"
+      }
+    }
+  }
+
+/*
+  stage {
+    name = "Test"
+    action {
+      name = "Test"
+      category = "Test"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      input_artifacts = ["Source"]
+      configuration {
+        ProjectName = "${var.codebuild_project_name}"
+      }
+    }
+  }
+*/
+
+  stage {
+    name = "Build"
+    action {
+      name = "Build"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      input_artifacts = ["Source"]
+      output_artifacts = ["BuildArtifact"]
+      configuration {
+        ProjectName = "${var.codebuild_project_name}"
       }
     }
   }
@@ -33,13 +66,29 @@ resource "aws_codepipeline" "pipeline" {
       owner = "AWS"
       provider = "CodeDeploy"
       version = "1"
-      input_artifacts = ["DeployPackage"]
+      input_artifacts = ["BuildArtifact"]
       configuration {
         ApplicationName = "${var.app_name}"
         DeploymentGroupName = "${var.stage_deployment_group_name}"
       }
     }
   }
+
+/*
+  stage {
+    name = "Manual-Approval"
+    action {
+      name = "Manual-Approval"
+      category = "Approval"
+      owner = "AWS"
+      provider = "Manual"
+      version = "1"
+      configuration {
+        ExternalEntityLink = "${var.manual_review_url}"
+      }
+    }
+  }
+*/
 
   stage {
     name = "Production"
@@ -49,7 +98,7 @@ resource "aws_codepipeline" "pipeline" {
       owner = "AWS"
       provider = "CodeDeploy"
       version = "1"
-      input_artifacts = ["DeployPackage"]
+      input_artifacts = ["BuildArtifact"]
       configuration {
         ApplicationName = "${var.app_name}"
         DeploymentGroupName = "${var.production_deployment_group_name}"

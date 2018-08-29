@@ -1,12 +1,18 @@
+module "code_build" {
+  source = "../code-build"
+  app_name = "${var.service_name}-${var.uniq_id}"
+}
+
 module "code_pipeline" {
   source = "../code-pipeline"
   pipeline_name = "${var.service_name}-${var.uniq_id}"
   role_arn = "${var.code_pipeline_service_role}"
+  codebuild_project_name = "${module.code_build.project_name}"
   artifact_bucket_name = "${var.code_pipeline_artifact_bucket_name}"
 
-  repo_owner = "cedarm"
-  repo_name = "aws-codepipeline-s3-aws-codedeploy_linux"
-  repo_branch = "master"
+  repo_owner = "${var.repo_owner}"
+  repo_name = "${var.repo_name}"
+  repo_branch = "${var.repo_branch}"
 
   app_name = "${var.service_name}-${var.uniq_id}"
   stage_deployment_group_name = "${module.code_deploy.stage_deployment_group_name}"
