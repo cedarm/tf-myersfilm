@@ -18,6 +18,8 @@ resource "aws_efs_mount_target" "targets" {
 
 resource "aws_security_group" "sg" {
   name = "efs-${var.service_name}-${var.uniq_id}"
+  vpc_id = "${var.vpc_id}"
+
   ingress {
     from_port = "2049"
     to_port = "2049"

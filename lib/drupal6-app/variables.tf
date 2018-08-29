@@ -5,11 +5,19 @@ variable "code_pipeline_service_role" {}
 variable "code_pipeline_artifact_bucket_name" {}
 variable "code_deploy_service_role" {}
 
-variable "vpc_subnet_ids" {
+variable "vpc_id" {
+  type = "string"
+}
+
+variable "elb_subnet_ids" {
   type = "list"
 }
 
-variable "availability_zones" {
+variable "asg_subnet_ids" {
+  type = "list"
+}
+
+variable "efs_subnet_ids" {
   type = "list"
 }
 

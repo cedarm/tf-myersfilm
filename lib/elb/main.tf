@@ -1,7 +1,7 @@
 resource "aws_elb" "elb" {
   name = "${var.service_name}-${var.uniq_id}"
+  subnets = ["${var.subnets}"]
   security_groups = ["${aws_security_group.elb.id}"]
-  availability_zones = ["${var.availability_zones}"]
 
   health_check {
     healthy_threshold = 2
@@ -23,12 +23,15 @@ resource "aws_elb" "elb" {
 
 resource "aws_security_group" "elb" {
   name = "elb-${var.service_name}-${var.uniq_id}"
+  vpc_id = "${var.vpc_id}"
+
   egress {
     from_port = 0
     to_port = 0
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   ingress {
     from_port = 80
     to_port = 80

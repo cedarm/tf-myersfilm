@@ -2,7 +2,8 @@ module "elb" {
   source = "../../elb"
   service_name = "${var.service_name}"
   uniq_id = "${var.uniq_id}"
-  availability_zones = "${var.availability_zones}"
+  vpc_id = "${var.vpc_id}"
+  subnets = ["${var.elb_subnet_ids}"]
   tags = "${var.tags}"
 }
 
@@ -10,7 +11,8 @@ module "asg" {
   source = "../../asg"
   service_name = "${var.service_name}"
   uniq_id = "${var.uniq_id}"
-  availability_zones = "${var.availability_zones}"
+  vpc_id = "${var.vpc_id}"
+  subnet_ids = ["${var.asg_subnet_ids}"]
   elb_name = "${module.elb.elb_name}"
   ssh_key_name = "${var.ssh_key_name}"
 
@@ -38,7 +40,8 @@ module "efs" {
   region = "${var.region}"
   service_name = "${var.service_name}"
   uniq_id = "${var.uniq_id}"
-  mount_target_subnets = ["${var.vpc_subnet_ids}"]
+  vpc_id = "${var.vpc_id}"
+  mount_target_subnets = ["${var.efs_subnet_ids}"]
   allow_from_security_groups = ["${module.asg.instance_security_group_id}"]
   tags = "${var.tags}"
 }

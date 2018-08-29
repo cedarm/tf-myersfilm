@@ -32,8 +32,10 @@ module "production" {
   uniq_id = "production-${var.uniq_id}"
 
   region = "${var.region}"
-  vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
-  availability_zones = "${var.availability_zones}"
+  vpc_id = "${var.vpc_id}"
+  elb_subnet_ids = ["${var.elb_subnet_ids}"]
+  asg_subnet_ids = ["${var.asg_subnet_ids}"]
+  efs_subnet_ids = ["${var.efs_subnet_ids}"]
   ssh_key_name = "${var.ssh_key_name}"
 
   instance_type = "${var.production_instance_type}"
@@ -66,8 +68,10 @@ module "stage" {
   uniq_id = "stage-${var.uniq_id}"
 
   region = "${var.region}"
-  vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
-  availability_zones = "${var.availability_zones}"
+  vpc_id = "${var.vpc_id}"
+  elb_subnet_ids = ["${var.elb_subnet_ids}"]
+  asg_subnet_ids = ["${var.asg_subnet_ids}"]
+  efs_subnet_ids = ["${var.efs_subnet_ids}"]
   ssh_key_name = "${var.ssh_key_name}"
 
   instance_type = "${var.stage_instance_type}"

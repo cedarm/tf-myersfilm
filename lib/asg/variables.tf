@@ -2,7 +2,11 @@ variable "service_name" {}
 variable "uniq_id" {}
 variable "elb_name" {}
 
-variable "availability_zones" {
+variable "vpc_id" {
+  type = "string"
+}
+
+variable "subnet_ids" {
   type = "list"
 }
 

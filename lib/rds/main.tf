@@ -8,6 +8,7 @@ resource "aws_db_instance" "db" {
 
   publicly_accessible     = "${var.publicly_accessible}"
   vpc_security_group_ids  = ["${var.vpc_security_group_ids}"]
+  db_subnet_group_name    = "${var.service_name}-${var.uniq_id}"
 
   skip_final_snapshot     = "${var.skip_final_snapshot}"
   final_snapshot_identifier = "final-${var.service_name}-${var.uniq_id}"
@@ -29,8 +30,13 @@ resource "aws_db_instance" "db" {
   username                = "${var.master_username}"
   password                = "${var.master_password}"
 
-  //db_subnet_group_name    = "default"
   //parameter_group_name    = "default.postgres9.6"
 
   tags = "${var.tags}"
+}
+
+resource "aws_db_subnet_group" "db" {
+  name       = "${var.service_name}-${var.uniq_id}"
+  subnet_ids = ["${var.vpc_subnet_ids}"]
+  tags       = "${var.tags}"
 }

@@ -10,6 +10,10 @@ variable "performance_mode" {
   default = "generalPurpose"
 }
 
+variable "vpc_id" {
+  type = "string"
+}
+
 variable "mount_target_subnets" {
   type = "list"
 }

@@ -1,7 +1,11 @@
 variable "service_name" {}
 variable "uniq_id" {}
 
-variable "availability_zones" {
+variable "vpc_id" {
+  type = "string"
+}
+
+variable "subnets" {
   type = "list"
 }
 

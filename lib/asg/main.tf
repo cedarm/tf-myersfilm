@@ -48,6 +48,8 @@ resource "aws_launch_configuration" "launch_config" {
 
 resource "aws_security_group" "instances" {
   name = "${var.service_name}-${var.uniq_id}-instances"
+  vpc_id = "${var.vpc_id}"
+
   ingress {
     from_port = "${var.server_port}"
     to_port = "${var.server_port}"
@@ -98,7 +100,7 @@ resource "aws_iam_instance_profile" "profile" {
 resource "aws_autoscaling_group" "asg" {
   name = "${var.service_name}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
-  availability_zones = ["${var.availability_zones}"]
+  vpc_zone_identifier = ["${var.subnet_ids}"]
 
   min_size = "${var.min_instances}"
   max_size = "${var.max_instances}"

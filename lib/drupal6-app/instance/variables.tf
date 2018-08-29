@@ -2,11 +2,19 @@ variable "region" {}
 variable "service_name" {}
 variable "uniq_id" {}
 
-variable "vpc_subnet_ids" {
+variable "vpc_id" {
+  type = "string"
+}
+
+variable "elb_subnet_ids" {
   type = "list"
 }
 
-variable "availability_zones" {
+variable "asg_subnet_ids" {
+  type = "list"
+}
+
+variable "efs_subnet_ids" {
   type = "list"
 }
 
