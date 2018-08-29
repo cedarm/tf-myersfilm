@@ -1,0 +1,33 @@
+remove non-aws kms keys
+
+use ssm kms key alias
+https://www.terraform.io/docs/providers/aws/d/kms_alias.html
+
+make code pipeline role_arn dynamic
+  role_arn = "arn:aws:iam::536179965220:role/AWS-CodePipeline-Service"
+
+make code build policy region dynamic
+
+replace ELB with Route53 zone w/ health checks
+  https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html
+
+remove ssh to instances from anywhere
+
+How do we do the equivalent of this in code pipeline?
+  https://github.com/cedarm/d8-gaia/blob/migration/hooks/common/post-code-deploy/run-updates.sh
+
+Drupal security
+  https://www.drupal.org/docs/8/install/trusted-host-settings
+
+Drupal performance
+  https://www.drupal.org/node/326504
+
+Apache tuning (for small instances)
+  https://aws.amazon.com/premiumsupport/knowledge-center/ec2-apache-memory-tuning/
+  http://imperialwicket.com/tuning-apache-for-a-low-memory-server-like-aws-micro-ec2-instances/
+
+
+Docs:
+  http://cloudinit.readthedocs.io/en/latest/
+  http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+  http://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure.html
