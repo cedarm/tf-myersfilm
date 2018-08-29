@@ -1,6 +1,6 @@
 variable "service_name" {}
 variable "uniq_id" {}
-variable "elb_name" {}
+//variable "elb_name" {}
 
 variable "vpc_id" {
   type = "string"
