@@ -56,6 +56,10 @@ variable "storage_encrypted" {
   default = "true"
 }
 
+variable "db_name" {
+  default = "postgres"
+}
+
 variable "master_username" {
   default = "postgres"
 }

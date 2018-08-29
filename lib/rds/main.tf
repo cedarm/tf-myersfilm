@@ -25,11 +25,9 @@ resource "aws_db_instance" "db" {
   allocated_storage       = "${var.allocated_storage}"
   storage_encrypted       = "${var.storage_encrypted}"
 
+  name                    = "${var.db_name}"
   username                = "${var.master_username}"
   password                = "${var.master_password}"
-
-  //default db:
-  //name                    = "postgres"
 
   //db_subnet_group_name    = "default"
   //parameter_group_name    = "default.postgres9.6"
