@@ -3,7 +3,17 @@ package_upgrade: true
 packages:
 - nfs-utils
 - ruby
-- httpd
+- httpd24
+- postgresql96
+- php56
+- php56-cli
+- php56-opcache
+- php56-gd
+- php56-fpm
+- php56-pdo
+- php56-pgsql
+- php56-xml
+
 runcmd:
 - echo "${efs_dns_name}:/ /var/www/html/efs-mount-point nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,_netdev 0 0" >> /etc/fstab
 - mkdir -p /var/www/html/efs-mount-point
