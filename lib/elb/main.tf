@@ -18,9 +18,7 @@ resource "aws_elb" "elb" {
     instance_protocol = "http"
   }
 
-  tags {
-    Env = "${var.env}"
-  }
+  tags = "${var.tags}"
 }
 
 resource "aws_security_group" "elb" {
@@ -37,4 +35,6 @@ resource "aws_security_group" "elb" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = "${var.tags}"
 }

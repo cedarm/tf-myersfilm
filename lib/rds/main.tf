@@ -32,7 +32,5 @@ resource "aws_db_instance" "db" {
   //db_subnet_group_name    = "default"
   //parameter_group_name    = "default.postgres9.6"
 
-  //tags {
-  //  workload-type = "production"
-  //}
+  tags = "${var.tags}"
 }

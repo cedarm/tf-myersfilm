@@ -25,3 +25,11 @@ variable "min_instances" {
 variable "max_instances" {
   default = 4
 }
+
+variable "tags" {
+  default = {}
+}
+
+variable "asg_tags" {
+  default = []
+}

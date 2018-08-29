@@ -8,3 +8,7 @@ variable "availability_zones" {
 variable "server_port" {
   default = 80
 }
+
+variable "tags" {
+  default = {}
+}

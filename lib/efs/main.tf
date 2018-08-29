@@ -25,5 +25,6 @@ resource "aws_security_group" "sg" {
     security_groups = ["${var.allow_from_security_groups}"]
     description = "allow from specific ec2 instances"
   }
+
   tags = "${var.tags}"
 }

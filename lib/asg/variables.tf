@@ -29,3 +29,7 @@ variable "max_instances" {
 variable "user_data" {
   default = ""
 }
+
+variable "tags" {
+  default = []
+}

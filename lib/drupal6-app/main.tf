@@ -39,6 +39,25 @@ module "production" {
   instance_type = "${var.production_instance_type}"
   min_instances = "${var.production_min_instances}"
   max_instances = "${var.production_max_instances}"
+
+  tags = {
+    Service = "${var.service_name}"
+    Environment = "${var.env}"
+  }
+
+  // ASG resource can't accept a standard tags map, so we duplicate them here
+  asg_tags = [
+    {
+      key = "Service"
+      value = "${var.service_name}"
+      propagate_at_launch = true
+    },
+    {
+      key = "Environment"
+      value = "${var.env}"
+      propagate_at_launch = true
+    },
+  ]
 }
 
 module "stage" {
@@ -54,4 +73,23 @@ module "stage" {
   instance_type = "${var.stage_instance_type}"
   min_instances = "${var.stage_min_instances}"
   max_instances = "${var.stage_max_instances}"
+
+  tags = {
+    Service = "${var.service_name}"
+    Environment = "${var.env}"
+  }
+
+  // ASG resource can't accept a standard tags map, so we duplicate them here
+  asg_tags = [
+    {
+      key = "Service"
+      value = "${var.service_name}"
+      propagate_at_launch = true
+    },
+    {
+      key = "Environment"
+      value = "${var.env}"
+      propagate_at_launch = true
+    },
+  ]
 }

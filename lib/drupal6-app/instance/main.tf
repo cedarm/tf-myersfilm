@@ -3,6 +3,7 @@ module "elb" {
   service_name = "${var.service_name}"
   uniq_id = "${var.uniq_id}"
   availability_zones = "${var.availability_zones}"
+  tags = "${var.tags}"
 }
 
 module "asg" {
@@ -18,6 +19,8 @@ module "asg" {
   max_instances = "${var.max_instances}"
 
   user_data = "${data.template_file.amazon_linux_instance_setup.rendered}"
+
+  tags = ["${var.asg_tags}"]
 }
 
 resource "aws_iam_role_policy_attachment" "code_deploy_ro" {
@@ -37,6 +40,7 @@ module "efs" {
   uniq_id = "${var.uniq_id}"
   mount_target_subnets = ["${var.vpc_subnet_ids}"]
   allow_from_security_groups = ["${module.asg.instance_security_group_id}"]
+  tags = "${var.tags}"
 }
 
 data "template_file" "amazon_linux_instance_setup" {

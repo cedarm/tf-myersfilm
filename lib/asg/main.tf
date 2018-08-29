@@ -106,14 +106,10 @@ resource "aws_autoscaling_group" "asg" {
   load_balancers = ["${var.elb_name}"]
   health_check_type = "EC2"
 
-  tag {
-    key = "Name"
-    value = "${var.service_name}-${var.uniq_id}"
-    propagate_at_launch = true
-  }
-  tag {
-    key = "Env"
-    value = "${var.env}"
-    propagate_at_launch = true
-  }
+  tags = ["${concat(
+    list(
+      map("key", "Name", "value", "${var.service_name}-${var.uniq_id}", "propagate_at_launch", true),
+    ),
+    var.tags)
+  }"]
 }
