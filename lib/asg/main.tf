@@ -95,6 +95,57 @@ resource "aws_iam_instance_profile" "profile" {
   role = "${aws_iam_role.instance_role.name}"
 }
 
+resource "aws_iam_role_policy_attachment" "ssm_parameter_store" {
+  role       = "${aws_iam_role.instance_role.name}"
+  policy_arn = "${aws_iam_policy.ssm_parameter_store.arn}"
+}
+
+resource "aws_iam_policy" "ssm_parameter_store" {
+  name = "${var.service_name}-${var.env}-${var.uniq_id}-ssm-parameter-store"
+  path        = "/"
+  description = "Allow access to SSM parameter store (specific prefix)"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ssm:DescribeParameters"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:ssm:us-west-2:536179965220:parameter/d6-test-2371264711",
+        "arn:aws:ssm:us-west-2:536179965220:parameter/d6-test-2371264711/*",
+        "arn:aws:ssm:us-west-2:536179965220:parameter/d6-test-4282691314/Staging",
+        "arn:aws:ssm:us-west-2:536179965220:parameter/d6-test-4282691314/Staging/*",
+        "arn:aws:ssm:us-west-2:536179965220:parameter/d6-test-4282691314/Production",
+        "arn:aws:ssm:us-west-2:536179965220:parameter/d6-test-4282691314/Production/*"
+      ]
+    },
+    {
+      "Effect":"Allow",
+      "Action":[
+        "kms:Decrypt"
+      ],
+      "Resource":[
+        "arn:aws:kms:us-west-2:536179965220:key/ef6deab0-0916-41ff-9a32-9abd65c0ed00"
+      ]
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_autoscaling_group" "asg" {
   name = "${var.service_name}-${var.env}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
@@ -103,7 +154,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size = "${var.min_instances}"
   max_size = "${var.max_instances}"
 
-  load_balancers = ["${var.elb_name}"]
+  //load_balancers = ["${var.elb_name}"]
   health_check_type = "EC2"
 
   tag {

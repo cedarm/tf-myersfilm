@@ -9,7 +9,7 @@ variable "stage_asg_list" {
   type = "list"
 }
 
-variable "stage_elb_name" {}
+//variable "stage_elb_name" {}
 
 variable "production_deployment_group_name" {
   default = "Production"
@@ -19,7 +19,7 @@ variable "production_asg_list" {
   type = "list"
 }
 
-variable "production_elb_name" {}
+//variable "production_elb_name" {}
 
 /*
 resource "random_id" "uniq_id" {

@@ -1,7 +1,7 @@
 variable "env" {}
 variable "service_name" {}
 variable "uniq_id" {}
-variable "elb_name" {}
+//variable "elb_name" {}
 
 variable "availability_zones" {
   type = "list"

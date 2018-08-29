@@ -9,14 +9,17 @@ resource "aws_codedeploy_deployment_group" "stage_group" {
 
   autoscaling_groups = ["${var.stage_asg_list}"]
 
+/*
   load_balancer_info {
     elb_info {
       name = "${var.stage_elb_name}"
     }
   }
+*/
 
   deployment_style {
-    deployment_option = "WITH_TRAFFIC_CONTROL"
+//    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_option = "WITHOUT_TRAFFIC_CONTROL"
     deployment_type   = "IN_PLACE"
   }
   deployment_config_name = "CodeDeployDefault.OneAtATime"
@@ -29,14 +32,17 @@ resource "aws_codedeploy_deployment_group" "production_group" {
 
   autoscaling_groups = ["${var.production_asg_list}"]
 
+/*
   load_balancer_info {
     elb_info {
       name = "${var.production_elb_name}"
     }
   }
+*/
 
   deployment_style {
-    deployment_option = "WITH_TRAFFIC_CONTROL"
+//    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_option = "WITHOUT_TRAFFIC_CONTROL"
     deployment_type   = "IN_PLACE"
   }
   deployment_config_name = "CodeDeployDefault.OneAtATime"

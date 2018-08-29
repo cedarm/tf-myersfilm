@@ -37,12 +37,16 @@ module "drupal6_app" {
   ssh_key_name = "${aws_key_pair.ec2_admin.key_name}"
 
   production_instance_type = "t2.nano"
-  production_min_instances = 2
-  production_max_instances = 4
+  production_min_instances = 1
+  production_max_instances = 6
 
   stage_instance_type = "t2.nano"
-  stage_min_instances = 2
+  stage_min_instances = 0
+  stage_max_instances = 3
 
+  //repo_owner = "cedarm"
+  //repo_name = "aws-codepipeline-s3-aws-codedeploy_linux"
+  //repo_branch = "master"
   repo_owner = "cedarm"
   repo_name = "d8-gaia"
   repo_branch = "migration"

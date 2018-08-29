@@ -10,6 +10,7 @@ resource "aws_codebuild_project" "project" {
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
     image        = "aws/codebuild/ubuntu-base:14.04"
+    //image        = "wodby/drupal-php:5.6-2.3.0"
     type         = "LINUX_CONTAINER"
 
     //environment_variable {

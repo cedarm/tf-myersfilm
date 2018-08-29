@@ -5,7 +5,8 @@ module "drupal_shared" {
   engine = "postgres"
   engine_version = "9.6.3"
 
-  instance_class = "db.t2.small"
+  instance_class = "db.t2.micro"
+  //instance_class = "db.t2.small"
   availability_zone = "${var.availability_zone}"
   multi_az = "false"
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
@@ -13,7 +14,8 @@ module "drupal_shared" {
   master_username = "postgres"
   master_password = "${random_id.drupal_shared_password.b64}"
 
-  storage_encrypted = "true"
+  storage_encrypted = "false"
+  //storage_encrypted = "true"
   storage_type = "gp2"
   allocated_storage = "5"
 

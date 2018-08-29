@@ -10,3 +10,5 @@ variable "repo_branch" {}
 variable "app_name" {}
 variable "stage_deployment_group_name" {}
 variable "production_deployment_group_name" {}
+
+//variable "manual_review_url" {}

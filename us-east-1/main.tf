@@ -22,16 +22,16 @@ resource "random_shuffle" "db_az" {
   result_count = 1
 }
 
+/*
 module "db" {
   source = "./db"
   availability_zone = "${random_shuffle.db_az.result[0]}"
   allow_from_security_groups = [
-//    "${module.drupal6_app.production_instance_security_group_id}",
-//    "${module.drupal6_app.stage_instance_security_group_id}",
+    "${module.drupal6_app.production_instance_security_group_id}",
+    "${module.drupal6_app.stage_instance_security_group_id}",
   ]
 }
 
-/*
 module "drupal6_app" {
   source = "../lib/drupal6-app"
   service_name = "d6-test"
@@ -41,12 +41,16 @@ module "drupal6_app" {
   ssh_key_name = "${aws_key_pair.ec2_admin.key_name}"
 
   production_instance_type = "t2.nano"
-  production_min_instances = 2
-  production_max_instances = 4
+  production_min_instances = 0
+  production_max_instances = 0
 
   stage_instance_type = "t2.nano"
-  stage_min_instances = 2
+  stage_min_instances = 0
+  stage_max_instances = 0
 
+  //repo_owner = "cedarm"
+  //repo_name = "aws-codepipeline-s3-aws-codedeploy_linux"
+  //repo_branch = "master"
   repo_owner = "cedarm"
   repo_name = "d8-gaia"
   repo_branch = "migration"

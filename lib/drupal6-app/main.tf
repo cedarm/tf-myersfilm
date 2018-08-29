@@ -10,6 +10,10 @@ module "code_pipeline" {
   codebuild_project_name = "${module.code_build.project_name}"
   artifact_bucket_name = "${var.code_pipeline_artifact_bucket_name}"
 
+  //repo_owner = "cedarm"
+  //repo_name = "aws-codepipeline-s3-aws-codedeploy_linux"
+  //repo_branch = "master"
+
   repo_owner = "${var.repo_owner}"
   repo_name = "${var.repo_name}"
   repo_branch = "${var.repo_branch}"
@@ -17,6 +21,8 @@ module "code_pipeline" {
   app_name = "${var.service_name}-${random_id.uniq_id.dec}"
   stage_deployment_group_name = "${module.code_deploy.stage_deployment_group_name}"
   production_deployment_group_name = "${module.code_deploy.production_deployment_group_name}"
+
+//  manual_review_url = "http://${module.stage.elb_dns_name}/"
 }
 
 module "code_deploy" {
@@ -24,10 +30,10 @@ module "code_deploy" {
   app_name = "${var.service_name}-${random_id.uniq_id.dec}"
 
   stage_asg_list = ["${module.stage.asg_name}"]
-  stage_elb_name = "${module.stage.elb_name}"
+//  stage_elb_name = "${module.stage.elb_name}"
 
   production_asg_list = ["${module.production.asg_name}"]
-  production_elb_name = "${module.production.elb_name}"
+//  production_elb_name = "${module.production.elb_name}"
 
   service_role = "${var.code_deploy_service_role}"
 }
