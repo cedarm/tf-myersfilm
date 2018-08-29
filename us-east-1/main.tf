@@ -1,7 +1,7 @@
 data "aws_availability_zones" "all" {}
 
-data "aws_subnet_ids" "vpc" {
-  vpc_id = "vpc-4dca0b29"
+data "aws_subnet_ids" "default_vpc" {
+  vpc_id = "${var.default_vpc_id}"
   //tags {
   //  Tier = "Private"
   //}
@@ -36,8 +36,10 @@ module "drupal6_app" {
   source = "../lib/drupal6-app"
   service_name = "d6-test"
   region = "${var.aws_region}"
-  availability_zones = ["${data.aws_availability_zones.all.names}"]
-  vpc_subnet_ids = ["${data.aws_subnet_ids.vpc.ids}"]
+  vpc_id = "${var.default_vpc_id}"
+  elb_subnet_ids = ["${data.aws_subnet_ids.default_vpc.ids}"]
+  asg_subnet_ids = ["${data.aws_subnet_ids.default_vpc.ids}"]
+  efs_subnet_ids = ["${data.aws_subnet_ids.default_vpc.ids}"]
   ssh_key_name = "${aws_key_pair.ec2_admin.key_name}"
 
   production_instance_type = "t2.nano"
