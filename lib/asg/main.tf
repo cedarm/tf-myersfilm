@@ -29,7 +29,7 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_launch_configuration" "launch_config" {
-  name_prefix = "${var.service_name}-${var.env}-${var.uniq_id}-"
+  name_prefix = "${var.service_name}-${var.uniq_id}-"
 
   image_id = "${data.aws_ami.amazon_linux.image_id}"
 
@@ -47,7 +47,7 @@ resource "aws_launch_configuration" "launch_config" {
 }
 
 resource "aws_security_group" "instances" {
-  name = "${var.service_name}-${var.env}-instances-${var.uniq_id}"
+  name = "${var.service_name}-${var.uniq_id}-instances"
   ingress {
     from_port = "${var.server_port}"
     to_port = "${var.server_port}"
@@ -72,7 +72,7 @@ resource "aws_security_group" "instances" {
 }
 
 resource "aws_iam_role" "instance_role" {
-  name = "${var.service_name}-${var.env}-${var.uniq_id}-instance-role"
+  name = "${var.service_name}-${var.uniq_id}-instance-role"
   path = "/"
   assume_role_policy = <<EOF
 {
@@ -91,12 +91,12 @@ resource "aws_iam_role" "instance_role" {
 }
 
 resource "aws_iam_instance_profile" "profile" {
-  name = "${var.service_name}-${var.env}-${var.uniq_id}-instance-profile"
+  name = "${var.service_name}-${var.uniq_id}-instance-profile"
   role = "${aws_iam_role.instance_role.name}"
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name = "${var.service_name}-${var.env}-${var.uniq_id}"
+  name = "${var.service_name}-${var.uniq_id}"
   launch_configuration = "${aws_launch_configuration.launch_config.id}"
   availability_zones = ["${var.availability_zones}"]
 
@@ -108,7 +108,7 @@ resource "aws_autoscaling_group" "asg" {
 
   tag {
     key = "Name"
-    value = "${var.service_name}-${var.env}"
+    value = "${var.service_name}-${var.uniq_id}"
     propagate_at_launch = true
   }
   tag {

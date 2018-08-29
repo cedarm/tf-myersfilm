@@ -1,5 +1,5 @@
 resource "aws_db_instance" "db" {
-  identifier              = "${var.service_name}-${random_id.uniq_id.dec}"
+  identifier              = "${var.service_name}-${var.uniq_id}"
   engine                  = "${var.engine}"
   engine_version          = "${var.engine_version}"
   instance_class          = "${var.instance_class}"
@@ -10,7 +10,7 @@ resource "aws_db_instance" "db" {
   vpc_security_group_ids  = ["${var.vpc_security_group_ids}"]
 
   skip_final_snapshot     = "${var.skip_final_snapshot}"
-  final_snapshot_identifier = "final-${var.service_name}-${random_id.uniq_id.dec}"
+  final_snapshot_identifier = "final-${var.service_name}-${var.uniq_id}"
 
   availability_zone       = "${var.multi_az ? "" : var.availability_zone}"
 

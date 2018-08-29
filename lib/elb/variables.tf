@@ -1,4 +1,3 @@
-variable "env" {}
 variable "service_name" {}
 variable "uniq_id" {}
 

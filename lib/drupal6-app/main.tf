@@ -1,6 +1,6 @@
 module "code_pipeline" {
   source = "../code-pipeline"
-  pipeline_name = "${var.service_name}-${random_id.uniq_id.dec}"
+  pipeline_name = "${var.service_name}-${var.uniq_id}"
   role_arn = "${var.code_pipeline_service_role}"
   artifact_bucket_name = "${var.code_pipeline_artifact_bucket_name}"
 
@@ -8,14 +8,14 @@ module "code_pipeline" {
   repo_name = "aws-codepipeline-s3-aws-codedeploy_linux"
   repo_branch = "master"
 
-  app_name = "${var.service_name}-${random_id.uniq_id.dec}"
+  app_name = "${var.service_name}-${var.uniq_id}"
   stage_deployment_group_name = "${module.code_deploy.stage_deployment_group_name}"
   production_deployment_group_name = "${module.code_deploy.production_deployment_group_name}"
 }
 
 module "code_deploy" {
   source = "../code-deploy"
-  app_name = "${var.service_name}-${random_id.uniq_id.dec}"
+  app_name = "${var.service_name}-${var.uniq_id}"
 
   stage_asg_list = ["${module.stage.asg_name}"]
   stage_elb_name = "${module.stage.elb_name}"
@@ -29,8 +29,8 @@ module "code_deploy" {
 module "production" {
   source = "./instance"
   service_name = "${var.service_name}"
+  uniq_id = "production-${var.uniq_id}"
 
-  env = "production"
   region = "${var.region}"
   vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
   availability_zones = "${var.availability_zones}"
@@ -44,8 +44,8 @@ module "production" {
 module "stage" {
   source = "./instance"
   service_name = "${var.service_name}"
+  uniq_id = "stage-${var.uniq_id}"
 
-  env = "stage"
   region = "${var.region}"
   vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
   availability_zones = "${var.availability_zones}"

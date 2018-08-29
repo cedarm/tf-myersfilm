@@ -1,5 +1,5 @@
 locals {
-  efs_name = "${var.service_name}-${var.env}-${var.uniq_id}-${var.region}"
+  efs_name = "${var.service_name}-${var.uniq_id}-${var.region}"
 }
 
 resource "aws_efs_file_system" "fs" {
@@ -17,7 +17,7 @@ resource "aws_efs_mount_target" "targets" {
 }
 
 resource "aws_security_group" "sg" {
-  name = "efs-${var.service_name}-${var.env}-${var.uniq_id}"
+  name = "efs-${var.service_name}-${var.uniq_id}"
   ingress {
     from_port = "2049"
     to_port = "2049"

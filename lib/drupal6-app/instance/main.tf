@@ -1,16 +1,14 @@
 module "elb" {
   source = "../../elb"
   service_name = "${var.service_name}"
-  uniq_id = "${random_id.uniq_id.dec}"
-  env = "${var.env}"
+  uniq_id = "${var.uniq_id}"
   availability_zones = "${var.availability_zones}"
 }
 
 module "asg" {
   source = "../../asg"
   service_name = "${var.service_name}"
-  uniq_id = "${random_id.uniq_id.dec}"
-  env = "${var.env}"
+  uniq_id = "${var.uniq_id}"
   availability_zones = "${var.availability_zones}"
   elb_name = "${module.elb.elb_name}"
   ssh_key_name = "${var.ssh_key_name}"
@@ -34,10 +32,9 @@ resource "aws_iam_role_policy_attachment" "ec2_role_code_deploy" {
 
 module "efs" {
   source = "../../efs"
-  env = "${var.env}"
   region = "${var.region}"
   service_name = "${var.service_name}"
-  uniq_id = "${random_id.uniq_id.dec}"
+  uniq_id = "${var.uniq_id}"
   mount_target_subnets = ["${var.vpc_subnet_ids}"]
   allow_from_security_groups = ["${module.asg.instance_security_group_id}"]
 }

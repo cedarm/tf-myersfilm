@@ -1,6 +1,6 @@
-variable "env" {}
 variable "region" {}
 variable "service_name" {}
+variable "uniq_id" {}
 
 variable "vpc_subnet_ids" {
   type = "list"
@@ -24,11 +24,4 @@ variable "min_instances" {
 
 variable "max_instances" {
   default = 4
-}
-
-resource "random_id" "uniq_id" {
-  keepers = {
-    service_name = "${var.service_name}"
-  }
-  byte_length = 4
 }

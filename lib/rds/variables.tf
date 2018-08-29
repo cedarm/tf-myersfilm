@@ -1,4 +1,5 @@
 variable "service_name" {}
+variable "uniq_id" {}
 
 variable "engine" {}
 
@@ -65,10 +66,3 @@ variable "master_username" {
 }
 
 variable "master_password" {}
-
-resource "random_id" "uniq_id" {
-  keepers = {
-    service_name = "${var.service_name}"
-  }
-  byte_length = 4
-}

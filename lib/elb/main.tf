@@ -24,7 +24,7 @@ resource "aws_elb" "elb" {
 }
 
 resource "aws_security_group" "elb" {
-  name = "elb-${var.service_name}-${var.env}-${var.uniq_id}"
+  name = "elb-${var.service_name}-${var.uniq_id}"
   egress {
     from_port = 0
     to_port = 0

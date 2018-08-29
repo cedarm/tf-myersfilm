@@ -1,5 +1,6 @@
 variable "region" {}
 variable "service_name" {}
+variable "uniq_id" {}
 variable "code_pipeline_service_role" {}
 variable "code_pipeline_artifact_bucket_name" {}
 variable "code_deploy_service_role" {}
@@ -38,11 +39,4 @@ variable "stage_min_instances" {
 
 variable "stage_max_instances" {
   default = 4
-}
-
-resource "random_id" "uniq_id" {
-  keepers = {
-    service_name = "${var.service_name}"
-  }
-  byte_length = 4
 }
