@@ -43,6 +43,10 @@ module "drupal6_app" {
   stage_instance_type = "t2.nano"
   stage_min_instances = 2
 
+  repo_owner = "cedarm"
+  repo_name = "d8-gaia"
+  repo_branch = "migration"
+
   code_pipeline_service_role = "arn:aws:iam::536179965220:role/AWS-CodePipeline-Service"
   code_pipeline_artifact_bucket_name = "${module.code_pipeline_bucket.bucket_name}"
   s3read_code_pipeline_policy_arn = "${module.code_pipeline_bucket.s3read_policy_arn}"

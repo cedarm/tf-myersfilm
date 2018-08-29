@@ -1,5 +1,6 @@
 variable "pipeline_name" {}
 variable "role_arn" {}
+variable "codebuild_project_name" {}
 variable "artifact_bucket_name" {}
 
 variable "repo_owner" {}

@@ -72,6 +72,17 @@ resource "aws_iam_policy" "codebuild_policy" {
     },
     {
       "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::codepipeline-us-west-2-*"
+      ],
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ]
+    },
+    {
+      "Effect": "Allow",
       "Action": [
         "ssm:GetParameters"
       ],
