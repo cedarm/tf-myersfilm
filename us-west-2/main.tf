@@ -45,6 +45,5 @@ module "drupal6_app" {
 
   code_pipeline_service_role = "arn:aws:iam::536179965220:role/AWS-CodePipeline-Service"
   code_pipeline_artifact_bucket_name = "${module.code_pipeline_bucket.bucket_name}"
-  s3read_code_pipeline_policy_arn = "${module.code_pipeline_bucket.s3read_policy_arn}"
   code_deploy_service_role = "${var.code_deploy_service_role_arn}"
 }

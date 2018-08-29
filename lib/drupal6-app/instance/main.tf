@@ -27,9 +27,9 @@ resource "aws_iam_role_policy_attachment" "code_deploy_ro" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployReadOnlyAccess"
 }
 
-resource "aws_iam_role_policy_attachment" "s3read_codepipeline" {
-  role       = "${module.asg.instance_role_name}"
-  policy_arn = "${var.s3read_code_pipeline_policy_arn}"
+resource "aws_iam_role_policy_attachment" "ec2_role_code_deploy" {
+  role = "${module.asg.instance_role_name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy"
 }
 
 module "efs" {

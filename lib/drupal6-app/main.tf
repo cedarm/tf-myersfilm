@@ -35,7 +35,6 @@ module "production" {
   vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
   availability_zones = "${var.availability_zones}"
   ssh_key_name = "${var.ssh_key_name}"
-  s3read_code_pipeline_policy_arn = "${var.s3read_code_pipeline_policy_arn}"
 
   instance_type = "${var.production_instance_type}"
   min_instances = "${var.production_min_instances}"
@@ -51,7 +50,6 @@ module "stage" {
   vpc_subnet_ids = ["${var.vpc_subnet_ids}"]
   availability_zones = "${var.availability_zones}"
   ssh_key_name = "${var.ssh_key_name}"
-  s3read_code_pipeline_policy_arn = "${var.s3read_code_pipeline_policy_arn}"
 
   instance_type = "${var.stage_instance_type}"
   min_instances = "${var.stage_min_instances}"
